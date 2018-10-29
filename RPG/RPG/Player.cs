@@ -57,14 +57,17 @@ namespace RPG
 
         public void Update()
         {
+            //Set correct Sprite based on direction to Draw
             currentAnim = animations[(int)direction];
             if (isMoving)
                 currentAnim.Update();
             else
                 currentAnim.setCurrentFrame(1);
+
             KeyboardState kState = Keyboard.GetState();
             float dt = (float)GameServices.dt;
 
+            //Set Correct Position and Direction
             isMoving = false;
             if(kState.IsKeyDown(Keys.Down)) {
                 direction = Dir.Down;
@@ -99,7 +102,6 @@ namespace RPG
                         break;
                     default:
                         break;
-
                 }
             }
 
@@ -108,7 +110,7 @@ namespace RPG
 
         public void Draw()
         {
-            currentAnim.Draw(GameServices.spriteBatch, position);
+            currentAnim.Draw(GameServices.spriteBatch, new Vector2(position.X + width/2, position.Y + height/2));
         }
 
         public void LoadContent()
