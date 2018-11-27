@@ -29,7 +29,7 @@ namespace RPG
         private int height = 96;
 
 
-        private Vector2 position = new Vector2(0, 0);
+        private Vector2 position = new Vector2(Game1.gameWidth/2, Game1.gameHeight/2);
         private int health = 3;
         public int Health { get { return health; } set { health = value; } }
         public Vector2 Position { get { return position; } }
@@ -43,7 +43,7 @@ namespace RPG
 
         public Player()
         {
-
+      
         }
 
         public void setX(float newX)
@@ -115,11 +115,11 @@ namespace RPG
 
         public void LoadContent()
         {
-            playerSprite = GameServices.Content.Load<Texture2D>("Player/player");
-            playerDownSprite = GameServices.Content.Load<Texture2D>("Player/playerDown");
-            playerUpSprite = GameServices.Content.Load<Texture2D>("Player/playerUp");
-            playerLeftSprite = GameServices.Content.Load<Texture2D>("Player/playerLeft");
-            playerRightSprite = GameServices.Content.Load<Texture2D>("Player/playerRight");
+            playerSprite = GameServices.Content.Load<Texture2D>("Assets/Player/player");
+            playerDownSprite = GameServices.Content.Load<Texture2D>("Assets/Player/playerDown");
+            playerUpSprite = GameServices.Content.Load<Texture2D>("Assets/Player/playerUp");
+            playerLeftSprite = GameServices.Content.Load<Texture2D>("Assets/Player/playerLeft");
+            playerRightSprite = GameServices.Content.Load<Texture2D>("Assets/Player/playerRight");
 
             animations[0] = new AnimatedSprite(playerDownSprite, 1, 4, animSpeed);
             animations[1] = new AnimatedSprite(playerUpSprite, 1, 4, animSpeed);
