@@ -28,15 +28,19 @@ namespace RPG
         private int width = 96;
         private int height = 96;
 
-
+        //Charateristics
         private Vector2 position = new Vector2(Game1.gameWidth/2, Game1.gameHeight/2);
         private int health = 3;
         public int Health { get { return health; } set { health = value; } }
         public Vector2 Position { get { return position; } }
+
+        //Movement
         private bool isMoving = false;
         private Dir direction = Dir.Down;
-
         private int speed = 200;
+        private KeyboardState kStateOld = Keyboard.GetState();
+
+        //Animation
         private double animSpeed = 0.1D;
         private AnimatedSprite[] animations = new AnimatedSprite[4];
         private AnimatedSprite currentAnim;
@@ -52,7 +56,7 @@ namespace RPG
         }
         public void setY(float newY)
         {
-            position.X = newY;
+            position.Y = newY;
         }
 
         public void Update()
@@ -104,6 +108,12 @@ namespace RPG
                         break;
                 }
             }
+
+            if(kState.IsKeyDown(Keys.Space) && kStateOld.IsKeyUp(Keys.Space))
+            {
+                Projectile.projectiles.Add(new Projectile(position, direction));
+            }
+            kStateOld = kState;
 
         }
 

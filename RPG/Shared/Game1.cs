@@ -12,7 +12,7 @@ namespace RPG
 {
     public class Game1 : Game
     {
-        bool fullscreen = false;
+        bool fullscreen = true;
         private static Rectangle screenDimensions = new Rectangle(0, 0, 0, 0);
         private static Rectangle windowDimensions = new Rectangle(0, 0, 0, 0);
         public static int screenWidth { get { return screenDimensions.Width; } }
@@ -36,19 +36,20 @@ namespace RPG
 
             ////////*Set Conditions
             graphics.IsFullScreen = fullscreen;
-            IsMouseVisible = true;
+            //IsMouseVisible = true;
 
             ///////*Set correct Aspect Ratio to match computer size
             screenDimensions.Width = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             screenDimensions.Height = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+
+
             int idealWidth;
-            int idealHeight = 720;
+            int idealHeight = gameHeight;
             float aspectRatio = ((float)screenWidth / (float)screenHeight);
-
             idealWidth = (int)Math.Round(idealHeight * aspectRatio);
-
             if (idealWidth % 2 != 0)
                 idealWidth++;
+
 
             windowDimensions.Width = (!fullscreen ? idealWidth : screenWidth);
             windowDimensions.Height = (!fullscreen ? idealHeight : screenHeight);
@@ -74,6 +75,9 @@ namespace RPG
             GameServices.AddService<SpriteBatch>(spriteBatch);
             GameServices.AddService<ContentManager>(Content);
             player.LoadContent();
+            Projectile.LoadContent();
+            Enemy.LoadContent();
+            Enemy.enemies.Add(new Snake(new Vector2(2, 2)));
         }
 
         protected override void UnloadContent()
@@ -85,22 +89,28 @@ namespace RPG
         {
             GameServices.RemoveService<GameTime>();
             GameServices.AddService<GameTime>(gameTime);
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-
+            
+            //Update calls
             player.Update();
-
+            foreach (Projectile proj in Projectile.projectiles)
+                proj.Update();
+            foreach (Enemy enemy in Enemy.enemies)
+                enemy.Update(player.Position);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.SetRenderTarget(rt);
-            GraphicsDevice.Clear(Color.Transparent);
+            GraphicsDevice.Clear(Color.ForestGreen);
 
-            //spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateScale((float)windowWidth / gameWidth));
+            
             spriteBatch.Begin();
             player.Draw();
+            foreach (Projectile proj in Projectile.projectiles)
+                proj.Draw();
+            foreach (Enemy enemy in Enemy.enemies)
+                enemy.Draw();
             spriteBatch.End();
 
             //End of Drawing

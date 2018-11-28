@@ -10,8 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)AnimatedSprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enemy.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projectile.cs" />
   </ItemGroup>
 </Project>
